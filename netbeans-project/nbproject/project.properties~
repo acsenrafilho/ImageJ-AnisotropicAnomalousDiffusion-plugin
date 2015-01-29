@@ -23,8 +23,8 @@ debug.test.classpath=\
     ${run.test.classpath}
 # This directory is removed when the project is cleaned:
 dist.dir=dist
-#dist.jar=/home/antonio/Documents/Fiji.app/plugins/Anomalous_Filters_.jar
-dist.jar=${dist.dir}/Anomalous_Filters_.jar
+dist.jar=/home/antonio/Documents/Fiji.app/plugins/Anomalous_Filters_.jar
+#dist.jar=${dist.dir}/Anomalous_Filters_.jar
 dist.javadoc.dir=${dist.dir}/javadoc
 endorsed.classpath=
 excludes=
@@ -34,7 +34,7 @@ jar.compress=false
 javac.classpath=\
     ${file.reference.ij.jar}
 # Space-separated list of extra javac options
-javac.compilerargs=
+javac.compilerargs=-d "/home/antonio/.imagej/plugins"
 javac.deprecation=false
 javac.processorpath=\
     ${javac.classpath}
