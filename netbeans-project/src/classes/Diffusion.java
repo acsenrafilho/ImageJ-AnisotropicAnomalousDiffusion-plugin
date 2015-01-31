@@ -1,4 +1,4 @@
-package Anomalous_Diffusion_Filters;
+package classes;
 
 /**
  * Filtros espaciais baseados em equação parabólicas de difusão.<br>

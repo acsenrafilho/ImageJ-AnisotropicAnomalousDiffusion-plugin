@@ -1,13 +1,12 @@
 package Anomalous_Diffusion_Filters;
 
-import Anomalous_Diffusion_Filters.Diffusion;
+import classes.Diffusion;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.WindowManager;
 import ij.gui.GenericDialog;
 import ij.plugin.PlugIn;
-import java.awt.event.MouseListener;
-import java.util.Vector;
+import classes.ImageAccess;
 
 /*
  * To change this template, choose Tools | Templates

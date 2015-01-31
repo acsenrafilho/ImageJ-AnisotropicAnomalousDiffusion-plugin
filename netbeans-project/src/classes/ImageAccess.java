@@ -1,4 +1,4 @@
-package Anomalous_Diffusion_Filters;
+package classes;
 
 
 import ij.ImagePlus;
