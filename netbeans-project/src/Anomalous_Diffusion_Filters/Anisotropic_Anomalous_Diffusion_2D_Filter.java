@@ -18,13 +18,19 @@ import classes.ImageAccess;
  */
 public class Anisotropic_Anomalous_Diffusion_2D_Filter implements PlugIn {
 //TODO Aprimorar plugin para rodar com imagestack, mesmo com processamento 2D.
+
+    final int imageDimension = 2;
     
     String[] choiceItemsEdgeFunction = {"Exponential", "Fractional", "Partial"};
     Diffusion diff = new Diffusion();
+    final double delta_limit = 1/Math.pow(2, imageDimension+1);
+    final double default_q = 1.0, default_k = 15.0, default_delta = delta_limit;
+    final int default_iterations = 5;
+    double q, k, delta;
+    int iterations;
 
     @Override
     public void run(String string) {
-
         //Get the image opened in the current ImageJ scene.
         ImagePlus img = WindowManager.getCurrentImage();
 
@@ -42,11 +48,14 @@ public class Anisotropic_Anomalous_Diffusion_2D_Filter implements PlugIn {
         GenericDialog gd = new GenericDialog("Anisotropic Anomalous Diffusion - 2D");
         gd.setOKLabel("Run");
 
-        gd.addNumericField("Anomalous parameter (Q)", 1.0, 4);
-        gd.addNumericField("Condutance", 5.0, 4);
-        gd.addNumericField("Time step", 0.0125, 4);
-        gd.addNumericField("Number of iterations", 5, 1);
+        gd.addNumericField("Anomalous parameter (Q)", default_q, 4);
+        gd.addNumericField("Condutance", default_k, 4);
+        gd.addNumericField("Time step", default_delta, 4);
+        gd.addNumericField("Number of iterations", default_iterations, 1);
         gd.addChoice("Edge function", choiceItemsEdgeFunction, choiceItemsEdgeFunction[0]);
+        gd.addMessage("If any values were set wrong,\nthe default values will be used.");
+
+        //gd.addCheckbox("Use automatic condutance estimator function", false);
         gd.showDialog();
 
         //Close diaglog if the user click on the Cancel button.
@@ -55,14 +64,40 @@ public class Anisotropic_Anomalous_Diffusion_2D_Filter implements PlugIn {
         }
 
         if (gd.wasOKed()) {
-            diff.setQ(gd.getNextNumber());
-            diff.setK(gd.getNextNumber());
-            diff.setDelta(gd.getNextNumber());
-            diff.setNumInteration((int) gd.getNextNumber());
+            q = gd.getNextNumber();
+            k = gd.getNextNumber();
+            delta = gd.getNextNumber();
+            iterations = (int) gd.getNextNumber();
+            //Check the parameters values set up from the user. If anything is wrong, it is used the default values.
+            checkParametersValues();
+
+            diff.setQ(q);
+            diff.setK(k);
+            diff.setDelta(delta);
+            diff.setNumInteration(iterations);
             int edgeChoice = gd.getNextChoiceIndex() + 1;
-            diff.AnomalousAnisoDiff(new ImageAccess(img.getProcessor()), edgeChoice).show("AAD-Q"+diff.getQ()+"numInt" + diff.getNumInteration() + "timeStep" + diff.getDelta() + "Condutance" + diff.getK());
+            diff.AnomalousAnisoDiff(new ImageAccess(img.getProcessor()), edgeChoice).show("AAD-Q" + diff.getQ() + "numInt" + diff.getNumInteration() + "timeStep" + diff.getDelta() + "Condutance" + diff.getK());
         }
 
+    }
+
+    private void checkParametersValues() {
+        //Test for the anomalous parameter (Q)
+        if (q < 0 || q > 2.0) {
+            q = default_q;
+        }
+        //Test for the condutance parameter (K)
+        if (k < 0) {
+            k = default_k;
+        }
+        //Test for the time step parameter (delta)
+        if (delta > delta_limit) {
+            delta = default_delta;
+        }
+        //Test for the number of iterations parameter (t)
+        if (iterations < 0) {
+            iterations = default_iterations;
+        }
     }
 
 }
