@@ -1,9 +1,12 @@
 package classes;
 
+import ij.IJ;
+
 /**
  * Filtros espaciais baseados em equação parabólicas de difusão.<br>
  * Filtros clássicos: isotrópicos e anisotrópicos.<br>
  * Fitlros anômalos: isotrópicos e anisotrópicos
+ *
  * @author Antonio Carlos da Silva Senra Filho
  */
 public class Diffusion extends Calc {
@@ -16,9 +19,10 @@ public class Diffusion extends Calc {
     /**
      * Escolha do tipo de função de parada de aresta (g( delta I )).
      * <br><br>
-     * Veja referencia em Perona P. and Malik J., "SCALE-SPACE AND EDGE-DETECTION USING ANISOTROPIC DIFFUSION", 
-     * IEEE Transactions On Pattern Analysis And Machine Intelligence,
-     * Vol. 12, pg 629 - 639. DOI 10.1109/34.56205 
+     * Veja referencia em Perona P. and Malik J., "SCALE-SPACE AND
+     * EDGE-DETECTION USING ANISOTROPIC DIFFUSION", IEEE Transactions On Pattern
+     * Analysis And Machine Intelligence, Vol. 12, pg 629 - 639. DOI
+     * 10.1109/34.56205
      */
     public static final int G_EXPONENTIAL = 0;
     public static final int G_FRACTION = 1;
@@ -26,6 +30,7 @@ public class Diffusion extends Calc {
 
     /**
      * Retorna o valor da variável anômala q.
+     *
      * @return Valor de q.
      */
     public double getQ() {
@@ -34,6 +39,7 @@ public class Diffusion extends Calc {
 
     /**
      * Insere um valor para a variável anômala q.
+     *
      * @param q Variável anômala.
      */
     public void setQ(double q) {
@@ -41,7 +47,9 @@ public class Diffusion extends Calc {
     }
 
     /**
-     * Retorna o valor do regulador delta para a solucao do EDP da equacao de difusao anisotropica.
+     * Retorna o valor do regulador delta para a solucao do EDP da equacao de
+     * difusao anisotropica.
+     *
      * @return O valor da constante de tempo.
      */
     public double getDelta() {
@@ -49,17 +57,20 @@ public class Diffusion extends Calc {
     }
 
     /**
-     * Insere um valor compreendido entre 0 < delta < 1/7, para o regulador da solucao de EDP da equacao de difusao anisotropica.
-     * @param delta
+     * Insere um valor compreendido entre 0 < delta < 1/7, para o regulador da
+     * solucao de EDP da equacao de difusao anisotropica. @param delta
      */
     public void setDelta(double delta) {
         Diffusion.delta = delta;
     }
 
     /**
-     * Insere um valor real compreendido entre 0 <= D <= 1, para o valor do coeficiente de difusao.
-     * <br><br>
-     * O valor pode ser compreendido como percentual desejado para a difusão. A ponderação que será utilizada leva em consideração a curva experimental retirada para os valores possíveis de q.
+     * Insere um valor real compreendido entre 0 <= D <= 1, para o valor do
+     * coeficiente de difusao. <br><br> O valor pode ser compreendido como
+     * percentual desejado para a difusão. A ponderação que será utilizada leva
+     * em consideração a curva experimental retirada para os valores possíveis
+     * de q.
+     *
      * @param DiffusionCoeficient coeficiente de difusão
      */
     public void setD(double DiffusionCoeficient) {
@@ -67,7 +78,9 @@ public class Diffusion extends Calc {
     }
 
     /**
-     * Retorna o valor percentual do coeficiente de difusao atribuido pela funcao setD().
+     * Retorna o valor percentual do coeficiente de difusao atribuido pela
+     * funcao setD().
+     *
      * @return double
      */
     public double getD() {
@@ -76,6 +89,7 @@ public class Diffusion extends Calc {
 
     /**
      * Insere um valor inteiro positivo para o número de interações.
+     *
      * @param numInteration Número de iterações.
      */
     public void setNumInteration(int numInteration) {
@@ -92,8 +106,11 @@ public class Diffusion extends Calc {
     }
 
     /**
-     * Retorna o valor do coeficiente kappa, no qual é um parâmetro que determina a intesidade de difusão.
-     * Utilizado para abordagem de difusao anisotropica, tanto para a abordagem clássica quanto para a abordagem anômala.
+     * Retorna o valor do coeficiente kappa, no qual é um parâmetro que
+     * determina a intesidade de difusão. Utilizado para abordagem de difusao
+     * anisotropica, tanto para a abordagem clássica quanto para a abordagem
+     * anômala.
+     *
      * @return double Valor do coeficiente Kappa.
      */
     public double getK() {
@@ -101,8 +118,11 @@ public class Diffusion extends Calc {
     }
 
     /**
-     * Insere um valor inteiro positivo para o coeficiente de difusão kappa, que determina a intensidade de difusão.
-     * Utilizado para abordagem de difusao anisotropica, tanto para a abordagem clássica quanto para a abordagem anômala.
+     * Insere um valor inteiro positivo para o coeficiente de difusão kappa, que
+     * determina a intensidade de difusão. Utilizado para abordagem de difusao
+     * anisotropica, tanto para a abordagem clássica quanto para a abordagem
+     * anômala.
+     *
      * @param k Valor de kappa. (Valor padrão k = 80)
      */
     public void setK(double k) {
@@ -114,11 +134,9 @@ public class Diffusion extends Calc {
      * <br><br>
      * Seleciona os valores padrões.
      * <br><br>
-     * Coeficiente Anômalo: q = 1.0;
-     * Coeficiente de Difusão: D = 1.0;
-     * Coeficiente Kappa: k = 80;
-     * Parâmetro Delta: delta = 0.13;
-     * Número de iterações: n = 1;
+     * Coeficiente Anômalo: q = 1.0; Coeficiente de Difusão: D = 1.0;
+     * Coeficiente Kappa: k = 80; Parâmetro Delta: delta = 0.13; Número de
+     * iterações: n = 1;
      */
     public Diffusion() {
         setQ(1.0);
@@ -129,17 +147,21 @@ public class Diffusion extends Calc {
     }
 
     /**
-     * Realiza a operação da função de difusão isotrópica clássica. Também conhecida como a equação de calor.
+     * Realiza a operação da função de difusão isotrópica clássica. Também
+     * conhecida como a equação de calor.
      * <br><br>
      * d I(x,y,t)/dt = D. nabla^2 ( I(x,y,t) )
      * <br><br>
-     * A utilização deste filtro iterativo é equivalente ao uso da máscara de convolução Gaussiana com sigma determinado pela relação de Einstein: sigma = sqrt(2.D.t).
-     * Sendo que D é o coeficiente de difusão e t é o número de iterações.
+     * A utilização deste filtro iterativo é equivalente ao uso da máscara de
+     * convolução Gaussiana com sigma determinado pela relação de Einstein:
+     * sigma = sqrt(2.D.t). Sendo que D é o coeficiente de difusão e t é o
+     * número de iterações.
      * <br><br>
      * Utiliza os parâmteros:
      * <br><br>
      * -> Número de interações<br>
      * -> Coeficiente de difusão.
+     *
      * @param input Imagem 2D em escala de cinza.
      * @return Imagem 2D suavizada pelo filtro isotrópico clássico.
      */
@@ -159,14 +181,15 @@ public class Diffusion extends Calc {
      * Realiza a operação da difusao anisotropica clássica.<br>
      * Aqui é utilizado o método proposto por Perona e Malik.
      * <br><br>
-     * Perona P. and Malik J., "SCALE-SPACE AND EDGE-DETECTION USING ANISOTROPIC DIFFUSION", 
-     * IEEE Transactions On Pattern Analysis And Machine Intelligence,
-     * Vol. 12, pg 629 - 639. DOI 10.1109/34.56205 
+     * Perona P. and Malik J., "SCALE-SPACE AND EDGE-DETECTION USING ANISOTROPIC
+     * DIFFUSION", IEEE Transactions On Pattern Analysis And Machine
+     * Intelligence, Vol. 12, pg 629 - 639. DOI 10.1109/34.56205
      * <br><br>
      * Utiliza
      * <br><br>
      * -> Número de interações<br>
      * -> Coeficiente kappa (K).
+     *
      * @param input Imagem 2D em escala de cinza.
      * @param g Tipo de função de arestra (gFunction())
      * @return Imagem 2D suavizada pelo método de difusão anisotrópica clássica.
@@ -222,18 +245,21 @@ public class Diffusion extends Calc {
 
     /**
      * Realiza a operação da difusao anisotropica anômala.<br>
-     * Este método utiliza derivadas finitas de primeira ordem e segue como critério de seleção de bordas as funções de parada de aresta
-     * dadas pelo filtro anisotrópico clássico.<br>
-     * O parâmetro anômalo deve ser escolhido seguindo o tipo de imagem que deve ser utilizada.<br><br>
+     * Este método utiliza derivadas finitas de primeira ordem e segue como
+     * critério de seleção de bordas as funções de parada de aresta dadas pelo
+     * filtro anisotrópico clássico.<br>
+     * O parâmetro anômalo deve ser escolhido seguindo o tipo de imagem que deve
+     * ser utilizada.<br><br>
      * Veja a referência:<br>
-     * 
-     * 
+     *
+     *
      * <br><br>
      * Utiliza
      * <br><br>
      * -> Número de interações<br>
      * -> Coeficiente Anômalo (q)<br>
      * -> Coeficiente Kappa (K)
+     *
      * @param input Imagem 2D em escala de cinza
      * @param g Função parada de aresta (gFunction())
      * @return Imagem suavizada pelo método de difusão anisotrópica anômala.
@@ -258,6 +284,8 @@ public class Diffusion extends Calc {
         }
 
         for (int count = 0; count < getNumInteration(); count++) {
+            IJ.showStatus("Anisotropic Anomalous Diffusion filter - 2D...please wait");
+            IJ.showProgress(count, getNumInteration());
             if (minImg < 0 && Math.abs(minImg) < 0.05) {
                 qOutput.add((-1) * minImg);
             }
@@ -299,13 +327,15 @@ public class Diffusion extends Calc {
     /**
      * Realiza a operação da difusao isotrópica anômala.<br>
      * Este método utiliza derivadas finitas de primeira ordem.<br>
-     * O efeito deste filtro iterativo é análogo a utilização de uma máscara de convolução q-Gaussiana.
+     * O efeito deste filtro iterativo é análogo a utilização de uma máscara de
+     * convolução q-Gaussiana.
      * <br><br>
      * Utiliza
      * <br><br>
      * -> Número de interações<br>
      * -> Coeficiente Anômalo (q)<br>
      * -> Coeficiente de Difusão (D)
+     *
      * @param input Imagem 2D em escala de cinza
      * @param percentD Coeficiente de difusão. (0 <= D <= 1)
      * @return Imagem 2D suavizada pelo método de difusão isotrópica anômala.
@@ -337,8 +367,10 @@ public class Diffusion extends Calc {
         double d = 0.0d;
         if (q < 1.0) {
             d = percentD * Math.exp((-1) * (Math.pow(q - 1.0, 2.0)) / 0.08);
-        } else if (q >= 1.0 && q <= 1.98) {
+        } else if (q > 1.0 && q <= 1.98) {
             d = percentD * Math.exp((-1) * (Math.pow(q - 1.0, 2.0)) / 0.4);
+        } else if (q == 1.0) {
+            d = 1.0;
         }
         return d;
     }
