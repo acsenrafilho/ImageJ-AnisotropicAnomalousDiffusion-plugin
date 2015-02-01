@@ -349,6 +349,8 @@ public class Diffusion extends Calc {
         ImageAccess Laplacian = new ImageAccess(input.getWidth(), input.getHeight());
 
         for (int count = 0; count < numInteration; count++) {
+            IJ.showStatus("Isotropic Anomalous Diffusion filter - 2D...please wait");
+            IJ.showProgress(count, getNumInteration());
             if (minQimg < 0 && Math.abs(minQimg) < 0.05) {
                 qOutput.add((-1) * minQimg);
             }
